@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'provider/bookmark_provider.dart';
+import '../provider/bookmark_provider.dart';
 import 'package:provider/provider.dart';
 import 'news_detail_page.dart';
 
@@ -9,7 +9,9 @@ class BookmarksPage extends StatelessWidget {
     final bookmarks = Provider.of<BookmarkProvider>(context).bookmarks;
 
     return Scaffold(
-      appBar: AppBar(title: Text('Bookmarks')),
+      appBar: AppBar(title: const Text('Bookmarks',
+          style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.normal)),
+        backgroundColor: Colors.teal,),
       body: ListView.builder(
         itemCount: bookmarks.length,
         itemBuilder: (context, index) {
@@ -19,8 +21,8 @@ class BookmarksPage extends StatelessWidget {
             child: ListTile(
               leading: Image.network(
                 article.urlToImage,
-                width: 100, // Set a fixed width for the image
-                fit: BoxFit.cover, // Ensure the image covers the space
+                width: 100,
+                fit: BoxFit.cover,
               ),
               title: Text(article.title),
               onTap: () {

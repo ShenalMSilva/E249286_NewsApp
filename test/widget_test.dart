@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'home_page.dart';
 import 'bookmarks_page.dart';
-import 'settings_page.dart';
+import 'main.dart';
 
 void main() {
   runApp(MyApp());

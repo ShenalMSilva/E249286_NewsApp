@@ -11,7 +11,9 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Settings')),
+      appBar: AppBar(title: const Text('Settings',
+          style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.normal)),
+        backgroundColor: Colors.teal,),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -22,9 +24,7 @@ class _SettingsPageState extends State<SettingsPage> {
               onChanged: (value) {
                 setState(() {
                   _isDarkMode = value;
-                  // Change the theme mode
                   if (_isDarkMode) {
-                    // Set dark mode
                     Theme.of(context).brightness == Brightness.dark
                         ? Theme.of(context).copyWith(brightness: Brightness.light)
                         : Theme.of(context).copyWith(brightness: Brightness.dark);

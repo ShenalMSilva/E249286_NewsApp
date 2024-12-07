@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'api_service.dart';
-import 'news_model.dart';
+import '../provider/api_service.dart';
+import '../models/news_model.dart';
 import 'category_page.dart';
 import 'news_detail_page.dart';
+import 'search_page.dart';
 
 class HomePage extends StatelessWidget {
   final ApiService apiService = ApiService();
@@ -10,7 +11,22 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('News App')),
+      appBar: AppBar(
+        title: const Text('News App',
+        style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.normal)),
+        backgroundColor: Colors.teal,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SearchPage()), // go to Search page
+              );
+            },
+          ),
+        ],
+      ),
       body: ListView(
         children: [
           _buildCategorySection(context, 'Business'),
@@ -46,13 +62,13 @@ class HomePage extends StatelessWidget {
                     ),
                   );
                 },
-                child: Text('View All'),
+                child: Text ('View All'),
               ),
             ],
           ),
         ),
         FutureBuilder<List<NewsArticle>>(
-          future: apiService.fetchTopHeadlines(category.toLowerCase()), // Fetch top headlines for the category
+          future: apiService.fetchTopHeadlines(category.toLowerCase()), // Fetch top headlines
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Container(
@@ -66,7 +82,7 @@ class HomePage extends StatelessWidget {
               );
             } else {
               return Container(
-                height: 150, // Set a fixed height for the horizontal list
+                height: 150, // height for the list
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: snapshot.data!.length > 5 ? 5 : snapshot.data!.length,
@@ -90,12 +106,12 @@ class HomePage extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => NewsDetailPage(article: article), // Navigate to the news detail page
+            builder: (context) => NewsDetailPage(article: article), // go to detailed page
           ),
         );
       },
       child: Container(
-        width: 120, // Set a fixed width for each news tile
+        width: 120, // Set width for tile
         margin: EdgeInsets.symmetric(horizontal: 8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,7 +119,7 @@ class HomePage extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
               child: Image.network(
-                article.urlToImage ?? 'https://via.placeholder.com/120', // Placeholder image if none available
+                article.urlToImage ?? 'https://via.placeholder.com/120',
                 height: 100,
                 width: 120,
                 fit: BoxFit.cover,

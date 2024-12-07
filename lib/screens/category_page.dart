@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'api_service.dart';
-import 'news_model.dart';
+import '../provider/api_service.dart';
+import '../models/news_model.dart';
 import 'news_detail_page.dart';
-import 'provider/bookmark_provider.dart';
+import '../provider/bookmark_provider.dart';
 import 'package:provider/provider.dart';
 
 class CategoryPage extends StatefulWidget {
@@ -15,12 +15,14 @@ class CategoryPage extends StatefulWidget {
   _CategoryPageState createState() => _CategoryPageState();
 }
 
+// Sorting order toggle -------
+
 class _CategoryPageState extends State<CategoryPage> {
-  bool isAlphabeticalOrder = false; // State variable to track sorting order
+  bool isAlphabeticalOrder = false;
 
   void toggleSortOrder() {
     setState(() {
-      isAlphabeticalOrder = !isAlphabeticalOrder; // Toggle the sorting order
+      isAlphabeticalOrder = !isAlphabeticalOrder;
     });
   }
 
@@ -28,12 +30,14 @@ class _CategoryPageState extends State<CategoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.category),
+        title: Text(widget.category,
+            style: const TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.normal)),
+        backgroundColor: Colors.teal,
         actions: [
           IconButton(
             icon: Icon(isAlphabeticalOrder ? Icons.sort_by_alpha : Icons.sort),
             onPressed: () {
-              toggleSortOrder(); // Toggle sorting order when button is pressed
+              toggleSortOrder(); // sort
             },
           ),
         ],
@@ -46,10 +50,10 @@ class _CategoryPageState extends State<CategoryPage> {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
-            // Sort the articles based on the selected order
+            // Sort  selected order
             List<NewsArticle> articles = snapshot.data!;
             if (isAlphabeticalOrder) {
-              articles.sort((a, b) => a.title.compareTo(b.title)); // Sort alphabetically by title
+              articles.sort((a, b) => a.title.compareTo(b.title)); // Sort alphabetical oder -- by title
             }
 
             return ListView.builder(
@@ -57,22 +61,22 @@ class _CategoryPageState extends State<CategoryPage> {
               itemBuilder: (context, index) {
                 final article = articles[index];
                 return Container(
-                  margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0), // Margin around the tile
+                  margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                   decoration: BoxDecoration(
                     color: Colors.white, // Background color of the tile
                     borderRadius: BorderRadius.circular(8.0), // Rounded corners
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1), // Shadow color
-                        spreadRadius: 2, // Spread radius
-                        blurRadius: 5, // Blur radius
-                        offset: Offset(0, 3), // Offset of the shadow
+                        color: Colors.black.withOpacity(0.1),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: Offset(0, 3),
                       ),
                     ],
                   ),
                   child: ListTile(
                     leading: ClipRRect(
-                      borderRadius: BorderRadius.circular(8.0), // Rounded corners for the image
+                      borderRadius: BorderRadius.circular(8.0),
                       child: Image.network(
                         article.urlToImage,
                         width: 100,

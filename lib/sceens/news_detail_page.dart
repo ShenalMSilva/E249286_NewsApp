@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'news_model.dart';
+import '../models/news_model.dart';
 
 class NewsDetailPage extends StatelessWidget {
   final NewsArticle article;
@@ -10,7 +10,9 @@ class NewsDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Read Mode'), // You can change this to any title you prefer
+        title: const Text('Read Mode',
+            style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.normal)),
+        backgroundColor: Colors.teal,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -19,21 +21,21 @@ class NewsDetailPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                article.title, // Display the full title here
+                article.title,
                 style: TextStyle(
-                  fontSize: 24, // Adjust font size as needed
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
-                textAlign: TextAlign.center, // Center align the title
-                maxLines: null, // Allow multiple lines
-                overflow: TextOverflow.visible, // Ensure it shows all text
+                textAlign: TextAlign.center,
+                maxLines: null,
+                overflow: TextOverflow.visible,
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
                 article.description,
-                style: TextStyle(fontSize: 16), // Adjust font size as needed
+                style: TextStyle(fontSize: 16),
               ),
             ),
             Padding(
