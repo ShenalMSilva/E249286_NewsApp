@@ -12,8 +12,10 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('News App',
-        style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.normal)),
+        title: const Text(
+          'News App',
+          style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.normal),
+        ),
         backgroundColor: Colors.teal,
         actions: [
           IconButton(
@@ -21,7 +23,7 @@ class HomePage extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SearchPage()), // go to Search page
+                MaterialPageRoute(builder: (context) => SearchPage()), // Go to Search page
               );
             },
           ),
@@ -62,7 +64,7 @@ class HomePage extends StatelessWidget {
                     ),
                   );
                 },
-                child: Text ('View All'),
+                child: Text('View All'),
               ),
             ],
           ),
@@ -81,13 +83,17 @@ class HomePage extends StatelessWidget {
                 child: Center(child: Text('Error: ${snapshot.error}')),
               );
             } else {
+              // Filter articles to include only those with a title and a URL to an image
+              final articles = snapshot.data!.where((article) =>
+              article.title != '' && article.urlToImage !='').toList();
+
               return Container(
-                height: 150, // height for the list
+                height: 150, // Height for the list
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: snapshot.data!.length > 5 ? 5 : snapshot.data!.length,
+                  itemCount: articles.length > 5 ? 5 : articles.length,
                   itemBuilder: (context, index) {
-                    final article = snapshot.data![index];
+                    final article = articles[index];
                     return _buildNewsTile(context, article);
                   },
                 ),
@@ -106,7 +112,7 @@ class HomePage extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => NewsDetailPage(article: article), // go to detailed page
+            builder: (context) => NewsDetailPage(article: article), // Go to detailed page
           ),
         );
       },

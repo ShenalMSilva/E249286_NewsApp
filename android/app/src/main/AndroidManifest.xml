@@ -3,7 +3,7 @@
     tools:ignore="ExtraText">
 
     <application
-        android:label="newsapp"
+        android:label="NewsApp - E249286"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

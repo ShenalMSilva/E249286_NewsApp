@@ -24,10 +24,10 @@ class NewsArticle {
       id: json['source']['id']?? 'Unknown',
       author: json['author'] ?? 'Unknown',
       category: json['category']??'Unknown',
-      title: json['title'] ?? 'Unknown',
+      title: json['title']?? '' ,
       description: json['description'] ?? 'Unknown',
       url: json['url'] ?? 'Unknown',
-      urlToImage: json['urlToImage'] ?? 'https://via.placeholder.com/120',
+      urlToImage: json['urlToImage'] ?? '',
       publishedAt: json['publishedAt'] ?? 'Unknown',
     );
   }

@@ -50,10 +50,13 @@ class _CategoryPageState extends State<CategoryPage> {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
-            // Sort  selected order
-            List<NewsArticle> articles = snapshot.data!;
+            // Filter articles to include only those with a title and a URL to an image
+            List<NewsArticle> articles = snapshot.data!.where((article) =>
+            article.title != '' && article.urlToImage != '').toList();
+
+            // Sort selected order
             if (isAlphabeticalOrder) {
-              articles.sort((a, b) => a.title.compareTo(b.title)); // Sort alphabetical oder -- by title
+              articles.sort((a, b) => a.title.compareTo(b.title)); // Sort alphabetical order -- by title
             }
 
             return ListView.builder(
@@ -63,8 +66,8 @@ class _CategoryPageState extends State<CategoryPage> {
                 return Container(
                   margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                   decoration: BoxDecoration(
-                    color: Colors.white, // Background color of the tile
-                    borderRadius: BorderRadius.circular(8.0), // Rounded corners
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8.0),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withOpacity(0.1),
@@ -90,14 +93,14 @@ class _CategoryPageState extends State<CategoryPage> {
                     trailing: IconButton(
                       icon: Icon(Icons.bookmark),
                       onPressed: () {
-                        if (article.id != null) {
+                        if (article.title != null) {
                           Provider.of<BookmarkProvider>(context, listen: false).addBookmark(article);
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text('Article bookmarked!')),
                           );
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Cannot bookmark article without ID')),
+                            SnackBar(content: Text('Error. Please try again')),
                           );
                         }
                       },
